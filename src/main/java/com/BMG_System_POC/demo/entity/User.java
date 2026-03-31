@@ -3,6 +3,8 @@ package com.BMG_System_POC.demo.entity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.UuidGenerator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -20,6 +22,9 @@ public class User {
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Customer customer;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<RefreshToken> refreshToken = new ArrayList<>();
 
     public UUID getId() {
         return id;
@@ -56,5 +61,11 @@ public class User {
     }
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+    public List<RefreshToken> getRefreshToken() {
+        return refreshToken;
+    }
+    public void setRefreshToken(List<RefreshToken> refreshToken) {
+        this.refreshToken = refreshToken;
     }
 }

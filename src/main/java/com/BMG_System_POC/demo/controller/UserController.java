@@ -22,8 +22,8 @@ public class UserController {
         UserResponseDTO response = userService.createUser(userCreateDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
-//    @GetMapping("/test")
-//    public ResponseEntity<String> test(Authentication authentication) {
-//        return ResponseEntity.ok(authentication.getName());
-//    }
+    @GetMapping("/test")
+    public ResponseEntity<String> test(Authentication authentication) {
+        return ResponseEntity.ok(authentication.getName());
+    }
 }

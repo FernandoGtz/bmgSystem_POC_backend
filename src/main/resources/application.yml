@@ -8,3 +8,11 @@ spring:
     hibernate:
       ddl-auto: update
     open-in-view: false
+
+api:
+  security:
+    jwt:
+      secret-key: "NDQ1MzQ1MzQ1NDM1MzQ1MzQ1MzQ1NDM1MzQ1MzQ1MzQ1NDM1MzQ1MzQ1MzQ1NDM1MzQ="
+      expiration: 60000
+    refresh-token:
+      expiration: 43200000
