@@ -4,7 +4,9 @@ import com.BMG_System_POC.demo.entity.RefreshToken;
 import com.BMG_System_POC.demo.entity.User;
 import com.BMG_System_POC.demo.repository.RefreshTokenRepository;
 import com.BMG_System_POC.demo.repository.UserRepository;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -49,6 +51,13 @@ public class RefreshTokenService {
     public void deletedByUserEmail(String email) {
         User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("Usuario no encontrado")) ;
         refreshTokenRepository.deleteByUser(user);
+    }
+
+    @Transactional
+    @Scheduled(fixedRate = 3600000 * 8) // Ejecutar cada 8 horas
+    public void deleteExpiredTokens() {
+        refreshTokenRepository.deleteByExpiresBefore(Instant.now());
+        LoggerFactory.getLogger(this.getClass()).info("Refresh tokens expirados eliminados");
     }
 
     public Optional<RefreshToken> findByToken(String token) {
